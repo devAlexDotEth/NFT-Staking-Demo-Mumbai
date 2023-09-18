@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       {/* Top Section */}
-      <h1 className={styles.h1}>Wilf Child NFT - Staking Dapp - $WILD</h1>
+      <h1 className={styles.h1}>Wild Child NFT - Staking Dapp - $WILD</h1>
       <div className={styles.nftBoxGrid}>
         <div
           className={styles.optionSelectBox}
