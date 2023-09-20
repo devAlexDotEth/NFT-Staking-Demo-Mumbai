@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       {/* Top Section */}
-      <h1 className={styles.h1}>Wild Child NFT - Staking Dapp - $WILD</h1>
+      <h1 className={styles.h1}>OkayBearsYachtClub NFT - Staking Dapp - $Bearberry</h1>
       <div className={styles.nftBoxGrid}>
         <div
           className={styles.optionSelectBox}
@@ -18,9 +18,9 @@ const Home: NextPage = () => {
         >
           {/* Mint a new NFT */}
           <Image src="/icons/drop.webp" alt="drop" width={64} height={64} />
-          <h2 className={styles.selectBoxTitle}>Mint a new NFT</h2>
+          <h2 className={styles.selectBoxTitle}>Mint a new Bear</h2>
           <p className={styles.selectBoxDescription}>
-            Use the NFT Drop Contract to claim an NFT from the collection.
+            Use the NFT Drop Contract to claim a Bear from the collection.
           </p>
         </div>
 
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           <Image src="/icons/token.webp" alt="token" width={64} height={64} />
           <h2 className={styles.selectBoxTitle}>Stake Your Bears</h2>
           <p className={styles.selectBoxDescription}>
-            Use the custom staking contract deployed via <b>thirdweb Deploy</b>{" "}
+            Use the custom staking contract deployed via <b>Bearified Labs</b>{" "}
             to stake your NFTs, and earn tokens from the <b>Token</b> contract.
           </p>
         </div>
