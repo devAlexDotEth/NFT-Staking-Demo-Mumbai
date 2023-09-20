@@ -104,14 +104,14 @@ const Stake: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>Stake Your NFTs</h1>
+      <h1 className={styles.h1}>Stake Your Bears</h1>
       <hr className={`${styles.divider} ${styles.spacerTop}`} />
 
       {!address ? (
         <ConnectWallet />
       ) : (
         <>
-<h2>Your Tokens</h2>
+<h2>Your Bears</h2>
 <div className={styles.tokenGrid}>
     <div className={styles.tokenItem}>
         <h3 className={styles.tokenLabel}>Claimable Rewards</h3>
@@ -140,7 +140,7 @@ const Stake: NextPage = () => {
 </Web3Button>
 
           <hr className={`${styles.divider} ${styles.spacerTop}`} />
-          <h2>Your Staked NFTs</h2>
+          <h2>Your Staked Bears</h2>
 
           <Web3Button
             contractAddress={stakingContractAddress}
@@ -160,7 +160,7 @@ const Stake: NextPage = () => {
           </div>
 
           <hr className={`${styles.divider} ${styles.spacerTop}`} />
-          <h2>Your Unstaked NFTs</h2>
+          <h2>Your Unstaked Bears</h2>
 
           <Web3Button
             contractAddress={stakingContractAddress}
