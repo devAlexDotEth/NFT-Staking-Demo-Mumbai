@@ -1,3 +1,4 @@
+import type { NextPage } from "next";
 import {
   ConnectWallet,
   ThirdwebNftMedia,
@@ -9,15 +10,14 @@ import {
   Web3Button,
 } from "@thirdweb-dev/react";
 import { BigNumber, ethers } from "ethers";
-import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import NFTCard from "../components/NFTCard";
+import styles from "../styles/Home.module.css";
 import {
   nftDropContractAddress,
   stakingContractAddress,
   tokenContractAddress,
 } from "../consts/contractAddresses";
-import styles from "../styles/Home.module.css";
+import NFTCard from "../components/NFTCard";
+import { useState, useEffect } from "react";
 
 const Stake: NextPage = () => {
   const address = useAddress();
@@ -59,6 +59,27 @@ const Stake: NextPage = () => {
       await nftDropContract?.setApprovalForAll(stakingContractAddress, true);
     }
     await contract?.call("stake", [[id]]);
+  }
+
+  async function stakeAll() {
+    if (!address || !ownedNfts) return;
+
+    const tokenIds = ownedNfts.map(nft => nft.metadata.id);
+    const isApproved = await nftDropContract?.isApproved(
+      address,
+      stakingContractAddress
+    );
+    if (!isApproved) {
+      await nftDropContract?.setApprovalForAll(stakingContractAddress, true);
+    }
+    await contract?.call("stake", [tokenIds]);
+  }
+
+  async function unstakeAll() {
+    if (!address || !stakedTokens) return;
+
+    const tokenIds = stakedTokens[0];
+    await contract?.call("withdraw", [tokenIds]);
   }
 
   if (isLoading) {
@@ -104,6 +125,12 @@ const Stake: NextPage = () => {
 
           <hr className={`${styles.divider} ${styles.spacerTop}`} />
           <h2>Your Staked NFTs</h2>
+          <Web3Button
+            contractAddress={stakingContractAddress}
+            action={unstakeAll}
+          >
+            Unstake All
+          </Web3Button>
           <div className={styles.nftBoxGrid}>
             {stakedTokens &&
               stakedTokens[0]?.map((stakedToken: BigNumber) => (
@@ -116,6 +143,12 @@ const Stake: NextPage = () => {
 
           <hr className={`${styles.divider} ${styles.spacerTop}`} />
           <h2>Your Unstaked NFTs</h2>
+          <Web3Button
+            contractAddress={stakingContractAddress}
+            action={stakeAll}
+          >
+            Stake All
+          </Web3Button>
           <div className={styles.nftBoxGrid}>
             {ownedNfts?.map((nft) => (
               <div className={styles.nftBox} key={nft.metadata.id.toString()}>
