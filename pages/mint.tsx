@@ -1,4 +1,4 @@
-import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { Web3Button } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { nftDropContractAddress } from "../consts/contractAddresses";
@@ -6,35 +6,34 @@ import styles from "../styles/Home.module.css";
 
 const Mint: NextPage = () => {
   const router = useRouter();
-  const { contract } = useContract(nftDropContractAddress);
-  const { mutateAsync: mint, isLoading } = useContractWrite(contract, "mint");
-
-  const handleMint = async () => {
-    try {
-      const mintAmount = 1; // Assuming you want to mint 1 NFT
-      const data = await mint({ args: [mintAmount] });
-      console.info("NFT minted successfully", data);
-      alert("NFT Claimed!");
-      router.push("/stake");
-    } catch (err) {
-      console.error("Minting failed", err);
-      alert(err);
-    }
-  };
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>Mint a 🐻Bear!</h1>
+      <h1 className={styles.h1}>Mint An NFT!</h1>
 
       <p className={styles.explain}>
-        Here is where we use our <b>Bearified Labs</b> contract to allow users to mint
-        one of 🐻Bears that we lazy minted.
+        Here is where we use our <b>NFT Drop</b> contract to allow users to mint
+        one of the NFTs that we lazy minted.
       </p>
       <hr className={`${styles.smallDivider} ${styles.detailPageHr}`} />
 
-      <button onClick={handleMint} disabled={isLoading}>
-        Claim a FREE (Test) 🐻Bear
-      </button>
+      <Web3Button
+        theme="dark"
+        contractAddress={nftDropContractAddress}
+        action={async (contract) => {
+          const _mintAmount = 1; // You can adjust this value as needed
+          const data = await contract.call("mint", [_mintAmount]);
+          if (data) {
+            alert("NFT Minted!");
+            router.push("/stake");
+          }
+        }}
+        onError={(error) => {
+          alert(error);
+        }}
+      >
+        Mint An NFT
+      </Web3Button>
     </div>
   );
 };
