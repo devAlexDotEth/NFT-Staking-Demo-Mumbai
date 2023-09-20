@@ -24,16 +24,16 @@ const Mint: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>Mint An NFT!</h1>
+      <h1 className={styles.h1}>Mint a 🐻Bear!</h1>
 
       <p className={styles.explain}>
-        Here is where we use our <b>NFT Drop</b> contract to allow users to mint
-        one of the NFTs that we lazy minted.
+        Here is where we use our <b>Bearified Labs</b> contract to allow users to mint
+        one of 🐻Bears that we lazy minted.
       </p>
       <hr className={`${styles.smallDivider} ${styles.detailPageHr}`} />
 
       <button onClick={handleMint} disabled={isLoading}>
-        Claim An NFT
+        Claim a FREE (Test) 🐻Bear
       </button>
     </div>
   );
