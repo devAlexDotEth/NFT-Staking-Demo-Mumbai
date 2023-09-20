@@ -1,4 +1,4 @@
-import { Web3Button } from "@thirdweb-dev/react";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { nftDropContractAddress } from "../consts/contractAddresses";
@@ -6,6 +6,21 @@ import styles from "../styles/Home.module.css";
 
 const Mint: NextPage = () => {
   const router = useRouter();
+  const { contract } = useContract(nftDropContractAddress);
+  const { mutateAsync: mint, isLoading } = useContractWrite(contract, "mint");
+
+  const handleMint = async () => {
+    try {
+      const mintAmount = 1; // Assuming you want to mint 1 NFT
+      const data = await mint({ args: [mintAmount] });
+      console.info("NFT minted successfully", data);
+      alert("NFT Claimed!");
+      router.push("/stake");
+    } catch (err) {
+      console.error("Minting failed", err);
+      alert(err);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -17,20 +32,9 @@ const Mint: NextPage = () => {
       </p>
       <hr className={`${styles.smallDivider} ${styles.detailPageHr}`} />
 
-      <Web3Button
-        theme="dark"
-        contractAddress={nftDropContractAddress}
-        action={(contract) => contract.erc721.claim(1)}
-        onSuccess={() => {
-          alert("NFT Claimed!");
-          router.push("/stake");
-        }}
-        onError={(error) => {
-          alert(error);
-        }}
-      >
+      <button onClick={handleMint} disabled={isLoading}>
         Claim An NFT
-      </Web3Button>
+      </button>
     </div>
   );
 };
